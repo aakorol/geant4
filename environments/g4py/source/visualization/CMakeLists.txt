@@ -25,6 +25,7 @@ geant4_add_pymodule(pyG4visualization
   pyG4RayTracerX.cc
   pyG4VGraphicsSystem.cc
   pyG4VRML2File.cc
+  pyG4X3DFile.cc
   pyG4VisManager.cc
   pymodG4visualization.cc
 )
@@ -34,6 +35,7 @@ target_link_libraries(pyG4visualization PRIVATE
   G4Tree
   G4RayTracer
   G4VRML
+  G4X3D
   G4visHepRep
   G4vis_management
 )

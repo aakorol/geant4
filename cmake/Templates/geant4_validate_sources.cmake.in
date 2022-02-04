@@ -38,6 +38,7 @@ set(GEANT4_FALSEPOSITIVE_SOURCES
   #   include/
   #   They are covered in sources.cmake though!
   G4VRML2SceneHandlerFunc.icc
+  G4X3DSceneHandlerFunc.icc
   # - Documentation of processes/hadronic/models/cascade/cascade
   # lists some sources in comments. These do not correspond to
   # real sources so we can safely filter them

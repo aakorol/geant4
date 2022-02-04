@@ -43,6 +43,7 @@
 #include "G4TrajectoryFilterFactories.hh"
 #include "G4TrajectoryModelFactories.hh"
 #include "G4VRML2File.hh"
+#include "G4X3DFile.hh"
 #include "G4GMocrenFile.hh"
 
 // Needing external packages or libraries...
@@ -134,6 +135,7 @@ G4VisExecutive::RegisterGraphicsSystems () {
   RegisterGraphicsSystem (new G4HepRepFile);
   RegisterGraphicsSystem (new G4RayTracer);
   RegisterGraphicsSystem (new G4VRML2File);
+  RegisterGraphicsSystem (new G4X3DFile);
   RegisterGraphicsSystem (new G4GMocrenFile);
 
 // Graphics systems needing external packages or libraries...

@@ -23,66 +23,42 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// ====================================================================
-//   pymodG4visualization.cc [Geant4Py module]
 //
-//                                         2005 Q
-// ====================================================================
-#include <boost/python.hpp>
+//
+// G4X3DFileViewer.hh
+// Satoshi Tanaka and Yasuhide Sawada
 
-using namespace boost::python;
+#ifndef G4X3DFILE_VIEWER_HH
+#define G4X3DFILE_VIEWER_HH
 
-// ====================================================================
-// module definition
-// ====================================================================
+#include <fstream>
+#include <memory>
 
-void export_G4VisManager();
-void export_G4VGraphicsSystem();
-void export_G4VRML2File();
-void export_G4X3DFile();
-void export_G4DAWNFILE();
-void export_G4HepRepFile();
-void export_G4ASCIITree();
-void export_G4RayTracer();
+#include "G4VViewer.hh"
+#include "globals.hh"
 
-#ifdef G4VIS_USE_OPENGLX
-void export_G4OpenGLStoredX();
-void export_G4OpenGLImmediateX();
-#endif
+class G4GenericMessenger;
+class G4X3DFileSceneHandler;
 
-#ifdef G4VIS_USE_OPENGLXM
-void export_G4OpenGLStoredXm();
-void export_G4OpenGLImmediateXm();
-#endif
+class G4X3DFileViewer: public G4VViewer {
+public:
+	G4X3DFileViewer(G4X3DFileSceneHandler& scene, const G4String& name = "");
+	virtual ~G4X3DFileViewer();
+	void ClearView();
+	void DrawView();
+	void ShowView();
+	void FinishView();
+private:
+	void SetView(); // Do nothing. SendViewParameters will do its job.
+	void SendViewParameters ()  ;
 
-#ifdef G4VIS_USE_RAYTRACERX
-void export_G4RayTracerX();
-#endif
+private:
+	G4X3DFileSceneHandler& fSceneHandler; // Reference to Graphics Scene for this view.
 
-BOOST_PYTHON_MODULE(G4visualization)
-{
-  export_G4VisManager();
-  export_G4VGraphicsSystem();
-  export_G4VRML2File();
-  export_G4X3DFile();
-  export_G4DAWNFILE();
-  export_G4HepRepFile();
-  export_G4ASCIITree();
-  export_G4RayTracer();
+	std::ofstream&         fDest ;
 
-#ifdef G4VIS_USE_OPENGLX
-  export_G4OpenGLStoredX();
-  export_G4OpenGLImmediateX();
-#endif
+	G4double      fViewHalfAngle ;	
+	G4double      fsin_VHA       ;	
+};
 
-#ifdef G4VIS_USE_OPENGLXM
-  export_G4OpenGLStoredXm();
-  export_G4OpenGLImmediateXm();
-#endif
-
-#ifdef G4VIS_USE_RAYTRACERX
-  export_G4RayTracerX();
-#endif
-
-}
-
+#endif //G4X3DFILE_VIEWER_HH

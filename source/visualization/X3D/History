@@ -1,0 +1,31 @@
+-------------------------------------------------------------------
+
+     =========================================================
+     Geant4 - an Object-Oriented Toolkit for Simulation in HEP
+     =========================================================
+
+                      Category History file
+                      ---------------------
+This file should be used by G4 developers and category coordinators
+to briefly summarize all major modifications introduced in the code
+and keep track of all category-tags.
+It DOES NOT substitute the  CVS log-message one should put at every
+committal in the CVS repository !
+
+     ----------------------------------------------------------
+     * Reverse chronological order (last date on top), please *
+     ----------------------------------------------------------
+
+History file for visualization/X3D sub-category
+------------------------------------------------
+
+02 Feb 2022 Aleksandr Korol
+- trivial rewrite of the VRML2File code to produce X3D XML files, some additional enhancements:
+  * two file formats:
+     * XML (`.x3d` extension) - with xml header etc.
+     * HTML (`.html` extension, default) - wrapped into HTML page with x3dom script/css, can be used in Jupyter directly;
+  * set create viewer/scenehandler parameters with UI messenger (directory `/vis/x3dfile`);
+  * use BOX element instead of MultiFacet for G4Box solid;
+
+See also ../VRML/History
+

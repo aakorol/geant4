@@ -122,6 +122,7 @@ if G4VisManager.GetConcreteInstance() == None:
     _raytracer_x = G4RayTracerX()
 
   _vrml2 = G4VRML2File()
+  _x3dfile  = G4X3DFile()
   _dawn = G4DAWNFILE()
   _heprep_file = G4HepRepFile()
   _atree = G4ASCIITree()
@@ -139,6 +140,7 @@ if G4VisManager.GetConcreteInstance() == None:
     gVisManager.RegisterGraphicsSystem(_raytracer_x)
 
   gVisManager.RegisterGraphicsSystem(_vrml2)
+  gVisManager.RegisterGraphicsSystem(_x3dfile)
   gVisManager.RegisterGraphicsSystem(_dawn)
   gVisManager.RegisterGraphicsSystem(_heprep_file)
   gVisManager.RegisterGraphicsSystem(_atree)

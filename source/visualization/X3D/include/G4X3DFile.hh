@@ -23,66 +23,60 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// ====================================================================
-//   pymodG4visualization.cc [Geant4Py module]
 //
-//                                         2005 Q
-// ====================================================================
-#include <boost/python.hpp>
+//
+// G4X3DFile.hh
+// Satoshi Tanaka & Yasuhide Sawada
 
-using namespace boost::python;
+#ifndef G4X3DFILE_HH
+#define G4X3DFILE_HH
 
-// ====================================================================
-// module definition
-// ====================================================================
+#include <memory>
 
-void export_G4VisManager();
-void export_G4VGraphicsSystem();
-void export_G4VRML2File();
-void export_G4X3DFile();
-void export_G4DAWNFILE();
-void export_G4HepRepFile();
-void export_G4ASCIITree();
-void export_G4RayTracer();
+#include "G4VGraphicsSystem.hh"
+#include "G4String.hh"
 
-#ifdef G4VIS_USE_OPENGLX
-void export_G4OpenGLStoredX();
-void export_G4OpenGLImmediateX();
-#endif
+class G4VSceneHandler;
 
-#ifdef G4VIS_USE_OPENGLXM
-void export_G4OpenGLStoredXm();
-void export_G4OpenGLImmediateXm();
-#endif
+#include "G4GenericMessenger.hh"
 
-#ifdef G4VIS_USE_RAYTRACERX
-void export_G4RayTracerX();
-#endif
+class G4X3DFile: public G4VGraphicsSystem {
+public:
 
-BOOST_PYTHON_MODULE(G4visualization)
-{
-  export_G4VisManager();
-  export_G4VGraphicsSystem();
-  export_G4VRML2File();
-  export_G4X3DFile();
-  export_G4DAWNFILE();
-  export_G4HepRepFile();
-  export_G4ASCIITree();
-  export_G4RayTracer();
+	G4X3DFile();
 
-#ifdef G4VIS_USE_OPENGLX
-  export_G4OpenGLStoredX();
-  export_G4OpenGLImmediateX();
-#endif
+	virtual ~G4X3DFile();
+	G4VSceneHandler* CreateSceneHandler(const G4String& name = "");
+	G4VViewer*  CreateViewer(G4VSceneHandler&, const G4String& name = "");
 
-#ifdef G4VIS_USE_OPENGLXM
-  export_G4OpenGLStoredXm();
-  export_G4OpenGLImmediateXm();
-#endif
+private:
 
-#ifdef G4VIS_USE_RAYTRACERX
-  export_G4RayTracerX();
-#endif
+	G4X3DFile(const G4X3DFile&) = delete;
+	// Create parameters for this graphics system artefacts
 
-}
+	friend class G4X3DFileSceneHandler;
+	friend class G4X3DFileViewer;
 
+	// viewer create parameters
+
+	G4double fX3DFileViewHalfAngle;
+
+	// scene handler create parameters
+
+	G4String fX3DFileDestDir;
+	G4String fX3DFileNamePrefix;
+	G4int    fX3DFileMaxNum;
+	G4int    fX3DFilePickable;
+
+	G4String fX3DFileFormat; // xml || html
+  
+	G4String fX3DFileCssURL; // css URL
+	G4String fX3DFileJsURL; // javascript URL
+  
+        G4int    fX3DFileWidth;      // canvas size fX3DFileor html fX3DFileormat
+        G4int    fX3DFileHeight;
+
+	std::unique_ptr<G4GenericMessenger> fX3DFileMessenger;
+};
+
+#endif //G4X3DFILE_HH
