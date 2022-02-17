@@ -33,6 +33,7 @@
 #include "G4Version.hh"
 #include "G4strstreambuf.hh"
 #include "G4UImanager.hh"
+#include "G4UIsession.hh"
 #include "G4PyCoutDestination.hh"
 #include "G4ThreeVector.hh"
 #include "G4TwoVector.hh"
@@ -45,13 +46,30 @@ using namespace boost::python;
 
 namespace pyglobals {
 
+G4PyCoutDestination* G4pycout = 0;
+
+// set cout back to geant4 session when python interpreter is finished
+void G4PyCout_reset()
+{
+  G4UIsession *session = G4UImanager::GetUIpointer()->GetSession();
+  G4coutbuf.SetDestination(session);
+  G4cerrbuf.SetDestination(session);
+
+  delete G4pycout;
+  G4pycout = 0;
+}
+
 // G4cout/cerr are set to Python stdout
 void SetG4PyCoutDestination()
 {
   G4UImanager::GetUIpointer();
-  G4PyCoutDestination* pycout= new G4PyCoutDestination();
-  G4coutbuf.SetDestination(pycout);
-  G4cerrbuf.SetDestination(pycout);
+
+  G4pycout = new G4PyCoutDestination();
+  G4coutbuf.SetDestination(G4pycout);
+  G4cerrbuf.SetDestination(G4pycout);
+
+  // register callback for the moment where python interpreter is finished
+  Py_AtExit(G4PyCout_reset);
 }
 
 void ResetG4PyCoutDestination()
